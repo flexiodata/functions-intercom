@@ -5,16 +5,8 @@ image:
   src: https://logo.clearbit.com/intercom.io
   alt: Intercom logo
 functions:
-- path: intercom-user-lookup.py
+  - path: intercom-user-lookup.py
 prompts:
-  - element: form
-    name: form_splash
-    description: |
-      <div class="tc pt4">
-        <img src="https://logo.clearbit.com/intercom.io" alt="Intercom logo" />
-        <h1 style="margin: 0">Intercom Function Pack</h1>
-        <h2 style="margin: 0; border: 0">Functions for accessing your Intercom info</h2>
-      </div>
   - element: form
     name: form_api_key
     title: Intercom API key
