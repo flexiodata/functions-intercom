@@ -6,20 +6,13 @@ image:
 functions:
   - path: intercom-user-lookup.py
 prompts:
-  - element: form
-    name: form_api_key
-    title: Intercom API key
+  - element: auth
+    name: auth
+    title: Connect to Intercom
     description: |
-      Use your Intercom API key to access the your Intercom information
-    class: el-form--cozy el-form__label-tiny
-    rules:
-      intercom_api_key:
-        - required: true
-          message: Please enter a valid API key to continue.
+      Connect to your Intercom account to connect the functions to your data
+    connection:
+      connection_type: intercom
     form_items:
-      - element: input
-        type: text
-        name: intercom_api_key
-        label: API key
-        placeholder: API key
+      - name: intercom_connection
         value: ''
