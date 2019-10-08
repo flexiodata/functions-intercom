@@ -23,13 +23,11 @@ from collections import OrderedDict
 def flexio_handler(flex):
 
     # get the api key from the variable input
-    auth_info = flex.connections['intercom'].get_credentials()
-    auth_token = auth_info.get('access_token','')
-    # auth_token = dict(flex.vars).get('intercom_connection')
-    # if auth_token is None:
-    #     flex.output.content_type = "application/json"
-    #     flex.output.write([[""]])
-    #     return
+    auth_token = dict(flex.vars).get('intercom_connection')
+    if auth_token is None:
+        flex.output.content_type = "application/json"
+        flex.output.write([[""]])
+        return
 
     # get the input
     input = flex.input.read()
