@@ -6,6 +6,7 @@ image:
 functions:
   - path: intercom-user-lookup.py
   - path: intercom-user-list.py
+  - path: intercom-event-list.py
 prompts:
   - element: auth
     name: auth
