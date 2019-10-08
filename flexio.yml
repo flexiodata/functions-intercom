@@ -5,6 +5,7 @@ image:
   alt: Intercom logo
 functions:
   - path: intercom-user-lookup.py
+  - path: intercom-user-list.py
 prompts:
   - element: auth
     name: auth
