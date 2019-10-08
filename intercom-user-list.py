@@ -5,7 +5,7 @@
 # title: Intercom User List
 # description: Lists all users created since a specified number of days ago
 # params:
-# - name: date
+# - name: days
 #   type: string
 #   description: Number of days ago to use to determine users that should be returned
 #   required: true
