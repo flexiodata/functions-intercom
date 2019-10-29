@@ -2,20 +2,21 @@
 # ---
 # name: intercom-list-events
 # deployed: true
-# title: Intercom Event List
+# title: Intercom List Events
 # description: Returns all events for a given user email
 # params:
-# - name: user_id
-#   type: string
-#   description: The id of the user to list the events for
-#   required: true
+#   - name: email
+#     type: string
+#     description: User email address used in Intercom
+#     required: true
 # examples:
-# - '1234'
+#   - '"helen.c.spencer@dodgit.com"'
 # notes:
 # ---
 
 import json
 import requests
+import urllib
 from cerberus import Validator
 from collections import OrderedDict
 
@@ -40,7 +41,7 @@ def flexio_handler(flex):
     # define the expected parameters and map the values to the parameter names
     # based on the positions of the keys/values
     params = OrderedDict()
-    params['user_id'] = {'required': True, 'type': 'string', 'coerce': str}
+    params['email'] = {'required': True, 'type': 'string', 'coerce': str}
     input = dict(zip(params.keys(), input))
 
     # validate the mapped input against the validator
@@ -52,13 +53,16 @@ def flexio_handler(flex):
 
     try:
 
-        # see here for more info: https://developers.intercom.com/intercom-api-reference/reference
-        url = 'https://api.intercom.io/events?type=user&user_id='+input['user_id']
+        # make the request
+        # see here for more info: https://developers.intercom.com/intercom-api-reference/reference#list-user-events
+        url_query_params = {"type": "user", "email": input["email"]}
+        url_query_str = urllib.parse.urlencode(url_query_params)
+
+        url = 'https://api.intercom.io/events?' + url_query_str
         headers = {
             'Accept': 'application/json',
             'Authorization': 'Bearer ' + auth_token
         }
-
         response = requests.get(url, headers=headers)
         content = response.json()
 
@@ -70,12 +74,12 @@ def flexio_handler(flex):
             {'name':'created_at', 'func': lambda item: item.get('created_at','')}
         ]
 
-        results = []
+        result = []
 
         row = []
         for c in columns:
             row.append(c['name'])
-        results.append(row)
+        result.append(row)
 
         events = content.get('events',[])
         for item in events:
@@ -83,10 +87,10 @@ def flexio_handler(flex):
             for c in columns:
                 value = c.get('func')(item)
                 row.append(value)
-            results.append(row)
+            result.append(row)
 
         flex.output.content_type = "application/json"
-        flex.output.write(results)
+        flex.output.write(result)
 
     except:
         raise RuntimeError

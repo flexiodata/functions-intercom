@@ -2,13 +2,33 @@
 # ---
 # name: intercom-list-signups
 # deployed: true
-# title: Intercom User List
+# title: Intercom List Signups
 # description: Returns a list of the most recently created user profiles
 # params:
-# - name: days
-#   type: string
-#   description: Number of days ago to use to determine users that should be returned
-#   required: true
+#   - name: days
+#     type: number
+#     description: Number of days to search for most recently created profiles
+#     required: true
+#   - name: properties
+#     type: array
+#     description: |
+#       The properties to return (defaults to 'email'). The following properties are allowed:
+#         * name (The full name of the user)
+#         * email (The email of the user)
+#         * phone (The phone number of the user)
+#         * sessions ()
+#         * last seen ()
+#         * first seen ()
+#         * signed up ()
+#         * city and country ()
+#         * last contacted ()
+#         * last heard from ()
+#         * last opened email ()
+#         * twitter followers ()
+#         * unsubscribed ()
+#         * browser language ()
+#     default_value: '"email"'
+#     required: false
 # examples:
 # - '10'
 # notes:
@@ -16,6 +36,10 @@
 
 import json
 import requests
+import urllib
+import itertools
+from datetime import *
+from decimal import *
 from cerberus import Validator
 from collections import OrderedDict
 
@@ -41,6 +65,7 @@ def flexio_handler(flex):
     # based on the positions of the keys/values
     params = OrderedDict()
     params['days'] = {'required': True, 'type': 'number', 'coerce': int}
+    params['properties'] = {'required': False, 'validator': validator_list, 'coerce': to_list, 'default': 'email'}
     input = dict(zip(params.keys(), input))
 
     # validate the mapped input against the validator
@@ -52,49 +77,74 @@ def flexio_handler(flex):
 
     try:
 
-        # see here for more info: https://developers.intercom.com/intercom-api-reference/reference
-        url = 'https://api.intercom.io/users?per_page=50&page=1&created_since='+str(input['days'])
+        # make the request
+        # see here for more info: https://developers.intercom.com/intercom-api-reference/reference#list-users
+        url_query_params = {"per_page": 50, "page": 1, "created_since": input["days"]}
+        url_query_str = urllib.parse.urlencode(url_query_params)
+
+        url = 'https://api.intercom.io/users?' + url_query_str
         headers = {
             'Accept': 'application/json',
             'Authorization': 'Bearer ' + auth_token
         }
-
         response = requests.get(url, headers=headers)
         content = response.json()
 
-        # return the info
-        columns = [
-            {'name':'user_id', 'func': lambda item: item.get('user_id','')},
-            {'name':'email', 'func': lambda item: item.get('email','')},
-            {'name':'phone', 'func': lambda item: item.get('phone','')},
-            {'name':'name', 'func': lambda item: item.get('name','')},
-            {'name':'location_postal', 'func': lambda item: item.get('location_data',{}).get('postal_code','')},
-            {'name':'location_city', 'func': lambda item: item.get('location_data',{}).get('city_name','')},
-            {'name':'location_region', 'func': lambda item: item.get('location_data',{}).get('region_name','')},
-            {'name':'location_country', 'func': lambda item: item.get('location_data',{}).get('country_name','')},
-            {'name':'created_at', 'func': lambda item: item.get('created_at','')},
-            {'name':'signed_up_at', 'func': lambda item: item.get('signed_up_at','')},
-            {'name':'referrer', 'func': lambda item: item.get('referrer','')}
-        ]
+        # get the properties to return and the property map
+        properties = [p.lower().strip() for p in input['properties']]
+        property_map = {
+            'user_id': lambda item: item.get('user_id',''),
+            'email': lambda item: item.get('email',''),
+            'phone': lambda item: item.get('phone',''),
+            'name': lambda item: item.get('name',''),
+            'location_postal': lambda item: item.get('location_data',{}).get('postal_code',''),
+            'location_city': lambda item: item.get('location_data',{}).get('city_name',''),
+            'location_region': lambda item: item.get('location_data',{}).get('region_name',''),
+            'location_country': lambda item: item.get('location_data',{}).get('country_name',''),
+            'created_at': lambda item: item.get('created_at',''),
+            'signed_up_at': lambda item: item.get('signed_up_at',''),
+            'referrer': lambda item: item.get('referrer','')
+        }
 
-        results = []
+        # build up the result
+        result = []
 
-        row = []
-        for c in columns:
-            row.append(c['name'])
-        results.append(row)
-
+        result.append(properties)
         users = content.get('users',[])
         for item in users:
-            row = []
-            for c in columns:
-                value = c.get('func')(item)
-                row.append(value)
-            results.append(row)
+            row = [property_map.get(p, lambda item: '')(item) for p in properties]
+            result.append(row)
 
+        result = json.dumps(result, default=to_string)
         flex.output.content_type = "application/json"
-        flex.output.write(results)
+        flex.output.write(result)
 
     except:
         raise RuntimeError
+
+def validator_list(field, value, error):
+    if isinstance(value, str):
+        return
+    if isinstance(value, list):
+        for item in value:
+            if not isinstance(item, str):
+                error(field, 'Must be a list with only string values')
+        return
+    error(field, 'Must be a string or a list of strings')
+
+def to_string(value):
+    if isinstance(value, (date, datetime)):
+        return value.isoformat()
+    if isinstance(value, (Decimal)):
+        return str(value)
+    return value
+
+def to_list(value):
+    # if we have a list of strings, create a list from them; if we have
+    # a list of lists, flatten it into a single list of strings
+    if isinstance(value, str):
+        return value.split(",")
+    if isinstance(value, list):
+        return list(itertools.chain.from_iterable(value))
+    return None
 
