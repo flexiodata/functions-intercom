@@ -3,20 +3,35 @@
 # name: intercom-list-events
 # deployed: true
 # title: Intercom List Events
-# description: Returns all events for a given user email
+# description: Returns events for a given user email
 # params:
 #   - name: email
 #     type: string
 #     description: User email address used in Intercom
 #     required: true
+#   - name: properties
+#     type: array
+#     description: |
+#       The properties to return (defaults to 'email'). The following properties are allowed:
+#         * user_id (The user id for the user)
+#         * email (The email for the user)
+#         * event_name (The name of the event that occurred)
+#         * created_at (The time the event occurred)
+#     default_value: '"event_name"'
+#     required: false
 # examples:
 #   - '"helen.c.spencer@dodgit.com"'
+#   - '"helen.c.spencer@dodgit.com", "event_name, created_at"'
+#   - '$A2,C$1:D$1'
 # notes:
 # ---
 
 import json
 import requests
 import urllib
+import itertools
+from datetime import *
+from decimal import *
 from cerberus import Validator
 from collections import OrderedDict
 
@@ -24,7 +39,9 @@ from collections import OrderedDict
 def flexio_handler(flex):
 
     # get the api key from the variable input
-    auth_token = dict(flex.vars).get('intercom_connection')
+    auth_token = flex.connections['intercom'].get_credentials()
+    auth_token = auth_token['access_token']
+    #auth_token = dict(flex.vars).get('intercom_connection')
     if auth_token is None:
         flex.output.content_type = "application/json"
         flex.output.write([[""]])
@@ -42,6 +59,7 @@ def flexio_handler(flex):
     # based on the positions of the keys/values
     params = OrderedDict()
     params['email'] = {'required': True, 'type': 'string', 'coerce': str}
+    params['properties'] = {'required': False, 'validator': validator_list, 'coerce': to_list, 'default': 'event_name'}
     input = dict(zip(params.keys(), input))
 
     # validate the mapped input against the validator
@@ -66,32 +84,54 @@ def flexio_handler(flex):
         response = requests.get(url, headers=headers)
         content = response.json()
 
-        # return the info
-        columns = [
-            {'name':'user_id', 'func': lambda item: item.get('user_id','')},
-            {'name':'email', 'func': lambda item: item.get('email','')},
-            {'name':'event_name', 'func': lambda item: item.get('event_name','')},
-            {'name':'created_at', 'func': lambda item: item.get('created_at','')}
-        ]
+        # get the properties to return and the property map
+        properties = [p.lower().strip() for p in input['properties']]
+        property_map = {
+            'user_id': lambda item: item.get('user_id',''),
+            'email': lambda item: item.get('email',''),
+            'event_name': lambda item: item.get('event_name',''),
+            'created_at': lambda item: item.get('created_at','')
+        }
 
+        # build up the result
         result = []
 
-        row = []
-        for c in columns:
-            row.append(c['name'])
-        result.append(row)
-
+        result.append(properties)
         events = content.get('events',[])
         for item in events:
-            row = []
-            for c in columns:
-                value = c.get('func')(item)
-                row.append(value)
+            row = [property_map.get(p, lambda item: '')(item) for p in properties]
             result.append(row)
 
+        result = json.dumps(result, default=to_string)
         flex.output.content_type = "application/json"
         flex.output.write(result)
 
     except:
         raise RuntimeError
+
+def validator_list(field, value, error):
+    if isinstance(value, str):
+        return
+    if isinstance(value, list):
+        for item in value:
+            if not isinstance(item, str):
+                error(field, 'Must be a list with only string values')
+        return
+    error(field, 'Must be a string or a list of strings')
+
+def to_string(value):
+    if isinstance(value, (date, datetime)):
+        return value.isoformat()
+    if isinstance(value, (Decimal)):
+        return str(value)
+    return value
+
+def to_list(value):
+    # if we have a list of strings, create a list from them; if we have
+    # a list of lists, flatten it into a single list of strings
+    if isinstance(value, str):
+        return value.split(",")
+    if isinstance(value, list):
+        return list(itertools.chain.from_iterable(value))
+    return None
 
