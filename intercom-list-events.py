@@ -14,8 +14,8 @@
 #     description: The properties to return (defaults to 'email'). See "Notes" for a listing of the available properties.
 #     required: false
 # examples:
-#   - '"helen.c.spencer@dodgit.com"'
-#   - '"helen.c.spencer@dodgit.com", "event_name, created_at"'
+#   - '"bbaggins@shire.com"'
+#   - '"bbaggins@shire.com", "event_name, created_at"'
 #   - '$A2, B$1:C$1'
 # notes: |
 #   The following properties are allowed:

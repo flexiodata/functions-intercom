@@ -14,8 +14,8 @@
 #     description: The properties to return (defaults to 'name'). See "Notes" for a listing of the available properties.
 #     required: false
 # examples:
-#   - '"helen.c.spencer@dodgit.com"'
-#   - '"helen.c.spencer@dodgit.com", "user_id, name, phone"'
+#   - '"bbaggins@shire.com"'
+#   - '"bbaggins@shire.com", "user_id, name, phone"'
 #   - '$A2, B$1:D$1'
 # notes: |
 #   The following properties are allowed:
