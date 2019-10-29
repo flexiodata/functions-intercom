@@ -11,19 +11,18 @@
 #     required: true
 #   - name: properties
 #     type: array
-#     description: |
-#       The properties to return (defaults to 'email'). The following properties are allowed:
-#         * user_id (The user id for the user)
-#         * email (The email for the user)
-#         * event_name (The name of the event that occurred)
-#         * created_at (The time the event occurred)
-#     default_value: '"event_name"'
+#     description: The properties to return (defaults to 'email'). See "Notes" for a listing of the available properties.
 #     required: false
 # examples:
 #   - '"helen.c.spencer@dodgit.com"'
 #   - '"helen.c.spencer@dodgit.com", "event_name, created_at"'
 #   - '$A2, B$1:C$1'
-# notes:
+# notes: |
+#   The following properties are allowed:
+#     * `user_id`: the user id of the user associated with the event
+#     * `email`: the email of the user associated with the event
+#     * `event_name`: the name of the event that occurred
+#     * `created_at`: the time the event occurred
 # ---
 
 import json

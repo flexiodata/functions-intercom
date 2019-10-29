@@ -11,33 +11,32 @@
 #     required: true
 #   - name: properties
 #     type: array
-#     description: |
-#       The properties to return (defaults to 'email'). The following properties are allowed:
-#         * user_id (The user id for the user)
-#         * email (The email for the user)
-#         * phone (The phone number for the user)
-#         * name (The full name for the user)
-#         * pseudonym (The pseudonym used if the user was previously list as an Intercom lead)
-#         * referrer (The url of the page the user was last on)
-#         * created_at (The time the user was added to Intercom)
-#         * signed_up_at (The time the user signed up)
-#         * updated_at (The time the user was last updated)
-#         * last_request_at (The time the user was last recorded as making a request)
-#         * session_count (The number of sessions the user is recorded as having made)
-#         * location_postal (The postal code for the user location)
-#         * location_city (The city for the user location)
-#         * location_region (The region for the user location)
-#         * location_country (The country for the user location)
-#         * location_country_code (The country code for the user location)
-#         * location_continent_code (The continent code for the user location)
-#         * location_timezone (The timezone for the user location)
-#     default_value: '"email"'
+#     description: The properties to return (defaults to 'email'). See "Notes" for a listing of the available properties.
 #     required: false
 # examples:
 #   - '10'
 #   - '20, "user_id, email, name"'
 #   - '20, B$1:D$1'
-# notes:
+# notes: |
+#   The following properties are allowed:
+#     * `user_id`: the user id for the user
+#     * `email`: the email for the user
+#     * `phone`: the phone number for the user
+#     * `name`: the full name for the user
+#     * `pseudonym`: the pseudonym used if the user was previously list as an Intercom lead
+#     * `referrer`: the url of the page the user was last on
+#     * `created_at`: the time the user was added to Intercom
+#     * `signed_up_at`: the time the user signed up
+#     * `updated_at`: the time the user was last updated
+#     * `last_request_at`: the time the user was last recorded as making a request
+#     * `session_count`: the number of sessions the user is recorded as having made
+#     * `location_postal`: the postal code for the user location
+#     * `location_city`: the city for the user location
+#     * `location_region`: the region for the user location
+#     * `location_country`: the country for the user location
+#     * `location_country_code`: the country code for the user location
+#     * `location_continent_code`: the continent code for the user location
+#     * `location_timezone`: the timezone for the user location
 # ---
 
 import json
