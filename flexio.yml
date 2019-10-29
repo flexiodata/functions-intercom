@@ -4,9 +4,9 @@ image:
   src: https://logo.clearbit.com/intercom.com
   alt: Intercom logo
 functions:
-  - path: intercom-user-lookup.py
-  - path: intercom-user-list.py
-  - path: intercom-event-list.py
+  - path: intercom-enrich-users.py
+  - path: intercom-list-events.py
+  - path: intercom-list-signups.py
 prompts:
   - element: auth
     name: auth
