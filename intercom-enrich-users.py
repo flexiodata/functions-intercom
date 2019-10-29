@@ -1,9 +1,9 @@
 
 # ---
-# name: intercom-user-lookup
+# name: intercom-enrich-users
 # deployed: true
 # title: Intercom User Lookup
-# description: Looks up information about a user from Intercom
+# description: Returns profile information of an intercom user based on email address
 # params:
 # - name: email
 #   type: string

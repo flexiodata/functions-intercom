@@ -1,9 +1,9 @@
 
 # ---
-# name: intercom-user-list
+# name: intercom-list-signups
 # deployed: true
 # title: Intercom User List
-# description: Lists all users created since a specified number of days ago
+# description: Returns a list of the most recently created user profiles
 # params:
 # - name: days
 #   type: string
