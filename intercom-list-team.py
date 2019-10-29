@@ -1,18 +1,18 @@
 
 # ---
-# name: intercom-enrich-users
+# name: intercom-list-team
 # deployed: true
-# title: Intercom Enrich Users
-# description: Returns profile information of an intercom user based on email address
+# title: Intercom List Team
+# description: Returns a list of all users in Intercom using the same email domain
 # params:
-#   - name: email
+#   - name: domain
 #     type: string
-#     description: User email address used in Intercom
+#     description: Text search of an Organization's domain_name (e.g. www.google.com)
 #     required: true
 #   - name: properties
 #     type: array
 #     description: |
-#       The properties to return (defaults to 'name'). The following properties are allowed:
+#       The properties to return (defaults to 'email'). The following properties are allowed:
 #         * user_id (The user id for the user)
 #         * email (The email for the user)
 #         * phone (The phone number for the user)
@@ -31,11 +31,11 @@
 #         * location_country_code (The country code for the user location)
 #         * location_continent_code (The continent code for the user location)
 #         * location_timezone (The timezone for the user location)
-#     default_value: '"name"'
+#     default_value: '"email"'
 #     required: false
 # examples:
-#   - '"helen.c.spencer@dodgit.com"'
-#   - '"helen.c.spencer@dodgit.com", "user_id, name, phone"'
+#   - 'www.google.com'
+#   - 'www.google.com, "user_id, email, name"'
 #   - '$A2, B$1:D$1'
 # notes:
 # ---
@@ -70,8 +70,8 @@ def flexio_handler(flex):
     # define the expected parameters and map the values to the parameter names
     # based on the positions of the keys/values
     params = OrderedDict()
-    params['email'] = {'required': True, 'type': 'string'}
-    params['properties'] = {'required': False, 'validator': validator_list, 'coerce': to_list, 'default': 'name'}
+    params['domain'] = {'required': True, 'type': 'number', 'coerce': str}
+    params['properties'] = {'required': False, 'validator': validator_list, 'coerce': to_list, 'default': 'email'}
     input = dict(zip(params.keys(), input))
 
     # validate the mapped input against the validator
@@ -85,7 +85,7 @@ def flexio_handler(flex):
 
         # make the request
         # see here for more info: https://developers.intercom.com/intercom-api-reference/reference#list-users
-        url_query_params = {"email": input["email"]}
+        url_query_params = {"per_page": 50, "page": 1, "created_since": input["days"]}
         url_query_str = urllib.parse.urlencode(url_query_params)
 
         url = 'https://api.intercom.io/users?' + url_query_str
@@ -119,15 +119,15 @@ def flexio_handler(flex):
             'location_timezone': lambda item: item.get('location_data',{}).get('timezone','')
         }
 
-        # get the user info for the first matching user
-        user_info = {}
-        user_list = content.get('users',[])
+        # build up the result
+        result = []
 
-        if len(user_list) > 0:
-            user_info = user_list[0]
-        result = [[property_map.get(p, lambda item: '')(user_info) for p in properties]]
+        result.append(properties)
+        users = content.get('users',[])
+        for item in users:
+            row = [property_map.get(p, lambda item: '')(item) for p in properties]
+            result.append(row)
 
-        # return the results
         result = json.dumps(result, default=to_string)
         flex.output.content_type = "application/json"
         flex.output.write(result)

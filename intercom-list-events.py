@@ -22,7 +22,7 @@
 # examples:
 #   - '"helen.c.spencer@dodgit.com"'
 #   - '"helen.c.spencer@dodgit.com", "event_name, created_at"'
-#   - '$A2,C$1:D$1'
+#   - '$A2, B$1:C$1'
 # notes:
 # ---
 

@@ -36,7 +36,7 @@
 # examples:
 #   - '10'
 #   - '20, "user_id, email, name"'
-#   - '20, C$1:E$1'
+#   - '20, B$1:D$1'
 # notes:
 # ---
 
