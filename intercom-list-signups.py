@@ -11,7 +11,7 @@
 #     required: true
 #   - name: properties
 #     type: array
-#     description: The properties to return (defaults to 'email'). See "Notes" for a listing of the available properties.
+#     description: The properties to return (defaults to all properties). See "Notes" for a listing of the available properties.
 #     required: false
 # examples:
 #   - '10'
@@ -70,7 +70,7 @@ def flexio_handler(flex):
     # based on the positions of the keys/values
     params = OrderedDict()
     params['days'] = {'required': True, 'type': 'number', 'coerce': int}
-    params['properties'] = {'required': False, 'validator': validator_list, 'coerce': to_list, 'default': 'email'}
+    params['properties'] = {'required': False, 'validator': validator_list, 'coerce': to_list, 'default': '*'}
     input = dict(zip(params.keys(), input))
 
     # validate the mapped input against the validator
@@ -79,6 +79,27 @@ def flexio_handler(flex):
     input = v.validated(input)
     if input is None:
         raise ValueError
+
+    # map this function's property names to the API's property names
+    property_map = OrderedDict()
+    property_map['user_id'] = lambda item: item.get('user_id',''),
+    property_map['email'] = lambda item: item.get('email',''),
+    property_map['phone'] = lambda item: item.get('phone',''),
+    property_map['name'] = lambda item: item.get('name',''),
+    property_map['pseudonym'] = lambda item: item.get('pseudonym',''),
+    property_map['referrer'] = lambda item: item.get('referrer',''),
+    property_map['created_at'] = lambda item: item.get('created_at',''),
+    property_map['signed_up_at'] = lambda item: item.get('signed_up_at',''),
+    property_map['updated_at'] = lambda item: item.get('updated_at',''),
+    property_map['last_request_at'] = lambda item: item.get('last_request_at',''),
+    property_map['session_count'] = lambda item: item.get('session_count',''),
+    property_map['location_postal'] = lambda item: item.get('location_data',{}).get('postal_code',''),
+    property_map['location_city'] = lambda item: item.get('location_data',{}).get('city_name',''),
+    property_map['location_region'] = lambda item: item.get('location_data',{}).get('region_name',''),
+    property_map['location_country'] = lambda item: item.get('location_data',{}).get('country_name',''),
+    property_map['location_country_code'] = lambda item: item.get('location_data',{}).get('country_code',''),
+    property_map['location_continent_code'] = lambda item: item.get('location_data',{}).get('continent_code',''),
+    property_map['location_timezone'] = lambda item: item.get('location_data',{}).get('timezone','')
 
     try:
 
@@ -97,26 +118,10 @@ def flexio_handler(flex):
 
         # get the properties to return and the property map
         properties = [p.lower().strip() for p in input['properties']]
-        property_map = {
-            'user_id': lambda item: item.get('user_id',''),
-            'email': lambda item: item.get('email',''),
-            'phone': lambda item: item.get('phone',''),
-            'name': lambda item: item.get('name',''),
-            'pseudonym': lambda item: item.get('pseudonym',''),
-            'referrer': lambda item: item.get('referrer',''),
-            'created_at': lambda item: item.get('created_at',''),
-            'signed_up_at': lambda item: item.get('signed_up_at',''),
-            'updated_at': lambda item: item.get('updated_at',''),
-            'last_request_at': lambda item: item.get('last_request_at',''),
-            'session_count': lambda item: item.get('session_count',''),
-            'location_postal': lambda item: item.get('location_data',{}).get('postal_code',''),
-            'location_city': lambda item: item.get('location_data',{}).get('city_name',''),
-            'location_region': lambda item: item.get('location_data',{}).get('region_name',''),
-            'location_country': lambda item: item.get('location_data',{}).get('country_name',''),
-            'location_country_code': lambda item: item.get('location_data',{}).get('country_code',''),
-            'location_continent_code': lambda item: item.get('location_data',{}).get('continent_code',''),
-            'location_timezone': lambda item: item.get('location_data',{}).get('timezone','')
-        }
+
+        # if we have a wildcard, get all the properties
+        if len(properties) == 1 and properties[0] == '*':
+            properties = list(property_map.keys())
 
         # build up the result
         result = []
@@ -124,7 +129,7 @@ def flexio_handler(flex):
         result.append(properties)
         users = content.get('users',[])
         for item in users:
-            row = [property_map.get(p, lambda item: '')(item) for p in properties]
+            row = [property_map.get(p, lambda item: '')(item) or '' for p in properties]
             result.append(row)
 
         result = json.dumps(result, default=to_string)

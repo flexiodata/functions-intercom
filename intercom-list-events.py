@@ -11,7 +11,7 @@
 #     required: true
 #   - name: properties
 #     type: array
-#     description: The properties to return (defaults to 'email'). See "Notes" for a listing of the available properties.
+#     description: The properties to return (defaults to all properties). See "Notes" for a listing of the available properties.
 #     required: false
 # examples:
 #   - '"bbaggins@shire.com"'
@@ -56,7 +56,7 @@ def flexio_handler(flex):
     # based on the positions of the keys/values
     params = OrderedDict()
     params['email'] = {'required': True, 'type': 'string', 'coerce': str}
-    params['properties'] = {'required': False, 'validator': validator_list, 'coerce': to_list, 'default': 'event_name'}
+    params['properties'] = {'required': False, 'validator': validator_list, 'coerce': to_list, 'default': '*'}
     input = dict(zip(params.keys(), input))
 
     # validate the mapped input against the validator
@@ -65,6 +65,13 @@ def flexio_handler(flex):
     input = v.validated(input)
     if input is None:
         raise ValueError
+
+    # map this function's property names to the API's property names
+    property_map = OrderedDict()
+    property_map['user_id'] = lambda item: item.get('user_id',''),
+    property_map['email'] = lambda item: item.get('email',''),
+    property_map['event_name'] = lambda item: item.get('event_name',''),
+    property_map['created_at'] = lambda item: item.get('created_at','')
 
     try:
 
@@ -83,12 +90,10 @@ def flexio_handler(flex):
 
         # get the properties to return and the property map
         properties = [p.lower().strip() for p in input['properties']]
-        property_map = {
-            'user_id': lambda item: item.get('user_id',''),
-            'email': lambda item: item.get('email',''),
-            'event_name': lambda item: item.get('event_name',''),
-            'created_at': lambda item: item.get('created_at','')
-        }
+
+        # if we have a wildcard, get all the properties
+        if len(properties) == 1 and properties[0] == '*':
+            properties = list(property_map.keys())
 
         # build up the result
         result = []
@@ -96,7 +101,7 @@ def flexio_handler(flex):
         result.append(properties)
         events = content.get('events',[])
         for item in events:
-            row = [property_map.get(p, lambda item: '')(item) for p in properties]
+            row = [property_map.get(p, lambda item: '')(item) or '' for p in properties]
             result.append(row)
 
         result = json.dumps(result, default=to_string)
