@@ -82,23 +82,23 @@ def flexio_handler(flex):
 
     # map this function's property names to the API's property names
     property_map = OrderedDict()
-    property_map['user_id'] = lambda item: item.get('user_id',''),
-    property_map['email'] = lambda item: item.get('email',''),
-    property_map['phone'] = lambda item: item.get('phone',''),
-    property_map['name'] = lambda item: item.get('name',''),
-    property_map['pseudonym'] = lambda item: item.get('pseudonym',''),
-    property_map['referrer'] = lambda item: item.get('referrer',''),
-    property_map['created_at'] = lambda item: item.get('created_at',''),
-    property_map['signed_up_at'] = lambda item: item.get('signed_up_at',''),
-    property_map['updated_at'] = lambda item: item.get('updated_at',''),
-    property_map['last_request_at'] = lambda item: item.get('last_request_at',''),
-    property_map['session_count'] = lambda item: item.get('session_count',''),
-    property_map['location_postal'] = lambda item: item.get('location_data',{}).get('postal_code',''),
-    property_map['location_city'] = lambda item: item.get('location_data',{}).get('city_name',''),
-    property_map['location_region'] = lambda item: item.get('location_data',{}).get('region_name',''),
-    property_map['location_country'] = lambda item: item.get('location_data',{}).get('country_name',''),
-    property_map['location_country_code'] = lambda item: item.get('location_data',{}).get('country_code',''),
-    property_map['location_continent_code'] = lambda item: item.get('location_data',{}).get('continent_code',''),
+    property_map['user_id'] = lambda item: item.get('user_id','')
+    property_map['email'] = lambda item: item.get('email','')
+    property_map['phone'] = lambda item: item.get('phone','')
+    property_map['name'] = lambda item: item.get('name','')
+    property_map['pseudonym'] = lambda item: item.get('pseudonym','')
+    property_map['referrer'] = lambda item: item.get('referrer','')
+    property_map['created_at'] = lambda item: item.get('created_at','')
+    property_map['signed_up_at'] = lambda item: item.get('signed_up_at','')
+    property_map['updated_at'] = lambda item: item.get('updated_at','')
+    property_map['last_request_at'] = lambda item: item.get('last_request_at','')
+    property_map['session_count'] = lambda item: item.get('session_count','')
+    property_map['location_postal'] = lambda item: item.get('location_data',{}).get('postal_code','')
+    property_map['location_city'] = lambda item: item.get('location_data',{}).get('city_name','')
+    property_map['location_region'] = lambda item: item.get('location_data',{}).get('region_name','')
+    property_map['location_country'] = lambda item: item.get('location_data',{}).get('country_name','')
+    property_map['location_country_code'] = lambda item: item.get('location_data',{}).get('country_code','')
+    property_map['location_continent_code'] = lambda item: item.get('location_data',{}).get('continent_code','')
     property_map['location_timezone'] = lambda item: item.get('location_data',{}).get('timezone','')
 
     try:

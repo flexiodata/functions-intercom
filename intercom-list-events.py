@@ -68,9 +68,9 @@ def flexio_handler(flex):
 
     # map this function's property names to the API's property names
     property_map = OrderedDict()
-    property_map['user_id'] = lambda item: item.get('user_id',''),
-    property_map['email'] = lambda item: item.get('email',''),
-    property_map['event_name'] = lambda item: item.get('event_name',''),
+    property_map['user_id'] = lambda item: item.get('user_id','')
+    property_map['email'] = lambda item: item.get('email','')
+    property_map['event_name'] = lambda item: item.get('event_name','')
     property_map['created_at'] = lambda item: item.get('created_at','')
 
     try:
