@@ -22,7 +22,7 @@
 #     * `user_id`: the user id for the user
 #     * `email`: the email for the user
 #     * `phone`: the phone number for the user
-#     * `name`: the full name for the user
+#     * `name`: the full name for the user (default)
 #     * `pseudonym`: the pseudonym used if the user was previously list as an Intercom lead
 #     * `referrer`: the url of the page the user was last on
 #     * `created_at`: the time the user was added to Intercom
