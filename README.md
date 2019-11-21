@@ -1,4 +1,4 @@
-# Intercom Google Sheets & Excel Spreadsheet Add on
+# Intercom Google Sheets & Excel Spreadsheet Add-on
 
 Intercom is a popular customer service and messaging app that enables you to manage communication with leads from your website as well as users of your web service. This Intercom spreadsheet integration for Google Sheets and Microsoft Excel enables you to import data from your Intercom account, like contacts, recent signups and user events. This add-on will enable you to integrate on-demand, refreshable customer management data without leaving your spreadsheet.
 
