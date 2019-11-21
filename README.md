@@ -1,6 +1,12 @@
-# Intercom Spreadsheet Functions
+# Intercom Google Sheets & Excel Spreadsheet Add on
 
-Intercom Spreadsheet Functions enable you to list and enrich data in your spreadsheets with information about users of your services and actions they've performed based on information tracked in [Intercom](https://www.intercom.com). You can create lists of recent signups or user actions, as well as enrich user information by performing lookups on email addresses and returning profile data about your users.
+Intercom is a popular customer service and messaging app that enables you to manage communication with leads from your website as well as users of your web service. This Intercom spreadsheet integration for Google Sheets and Microsoft Excel enables you to import data from your Intercom account, like contacts, recent signups and user events. This add-on will enable you to integrate on-demand, refreshable customer management data without leaving your spreadsheet.
+
+For example, with this Excel and Google Sheets add-on you can:
+
+* Enrich a list of emails with Intercom profile information, like phone, location, signup date, and referrer.
+* Import user event data, based on an email address, including event name and timestamp.
+* Extract a list of recent signups in Intercom based on number of days, and return information like user id, email, phone number, name and referrer.
 
 Here are some examples:
 
