@@ -27,7 +27,7 @@ Get a list of user ids, emails, and names of the last 20 user profiles that were
 
 ## Prerequisites
 
-The Intercom Spreadsheet Functions utilize [Flex.io](https://www.flex.io) and [Intercom](https://www.intercom.com). To use these functions, you'll need:
+The Intercom spreadsheet functions utilize [Flex.io](https://www.flex.io) and [Intercom](https://www.intercom.com). To use these functions, you'll need:
 
 * A [Flex.io account](https://www.flex.io/app/signup) to run the functions
 * A [Flex.io Add-on](https://www.flex.io/add-ons) for Microsoft Excel or Google Sheets to use the functions in your spreadsheet
