@@ -52,7 +52,7 @@ from collections import OrderedDict
 def flexio_handler(flex):
 
     # get the api key from the variable input
-    auth_token = dict(flex.vars).get('intercom_connection')
+    auth_token = dict(flex.vars).get('intercom_connection',{}).get('access_token')
     if auth_token is None:
         flex.output.content_type = "application/json"
         flex.output.write([[""]])
