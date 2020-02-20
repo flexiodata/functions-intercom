@@ -11,32 +11,67 @@
 #     required: true
 #   - name: properties
 #     type: array
-#     description: The properties to return (defaults to 'name'). See "Notes" for a listing of the available properties.
+#     description: The properties to return (defaults to 'name'). See "Returns" for a listing of the available properties.
 #     required: false
+# returns:
+#   - name: user_id
+#     type: string
+#     description: The user id for the user
+#   - name: email
+#     type: string
+#     description: The email for the user
+#   - name: phone
+#     type: string
+#     description: The phone number for the user
+#   - name: name
+#     type: string
+#     description: The full name for the user (default)
+#   - name: pseudonym
+#     type: string
+#     description: The pseudonym used if the user was previously list as an Intercom lead
+#   - name: referrer
+#     type: string
+#     description: The url of the page the user was last on
+#   - name: created_at
+#     type: string
+#     description: The time the user was added to Intercom
+#   - name: signed_up_at
+#     type: string
+#     description: The time the user signed up
+#   - name: updated_at
+#     type: string
+#     description: The time the user was last updated
+#   - name: last_request_at
+#     type: string
+#     description: The time the user was last recorded as making a request
+#   - name: session_count
+#     type: string
+#     description: The number of sessions the user is recorded as having made
+#   - name: location_postal
+#     type: string
+#     description: The postal code for the user location
+#   - name: location_city
+#     type: string
+#     description: The city for the user location
+#   - name: location_region
+#     type: string
+#     description: The region for the user location
+#   - name: location_country
+#     type: string
+#     description: The country for the user location
+#   - name: location_country_code
+#     type: string
+#     description: The country code for the user location
+#   - name: location_continent_code
+#     type: string
+#     description: The continent code for the user location
+#   - name: location_timezone
+#     type: string
+#     description: The timezone for the user location
 # examples:
 #   - '"bbaggins@shire.com"'
 #   - '"bbaggins@shire.com", "user_id, name, phone"'
 #   - '$A2, B$1:D$1'
-# notes: |
-#   The following properties are allowed:
-#     * `user_id`: the user id for the user
-#     * `email`: the email for the user
-#     * `phone`: the phone number for the user
-#     * `name`: the full name for the user (default)
-#     * `pseudonym`: the pseudonym used if the user was previously list as an Intercom lead
-#     * `referrer`: the url of the page the user was last on
-#     * `created_at`: the time the user was added to Intercom
-#     * `signed_up_at`: the time the user signed up
-#     * `updated_at`: the time the user was last updated
-#     * `last_request_at`: the time the user was last recorded as making a request
-#     * `session_count`: the number of sessions the user is recorded as having made
-#     * `location_postal`: the postal code for the user location
-#     * `location_city`: the city for the user location
-#     * `location_region`: the region for the user location
-#     * `location_country`: the country for the user location
-#     * `location_country_code`: the country code for the user location
-#     * `location_continent_code`: the continent code for the user location
-#     * `location_timezone`: the timezone for the user location
 # ---
 
 import json
