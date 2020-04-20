@@ -1,8 +1,8 @@
 
 # ---
-# name: intercom-list-events
+# name: intercom-events
 # deployed: true
-# title: Intercom List Events
+# title: Intercom Events
 # description: Returns events for a given user email
 # params:
 #   - name: email
