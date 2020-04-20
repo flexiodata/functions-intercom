@@ -4,7 +4,6 @@ image:
   src: https://logo.clearbit.com/intercom.com
   alt: Intercom logo
 functions:
-  - path: intercom-enrich-users.py
   - path: intercom-list-events.py
   - path: intercom-list-signups.py
 prompts:
