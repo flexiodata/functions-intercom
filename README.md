@@ -17,12 +17,12 @@ Get the user_id, name, and phone number for 'bbaggins@shire.com' based on email 
 
 Get the name and date of an action performed by 'bbaggins@shire.com':
 ```
-=FLEX("YOUR_TEAM_NAME/intercom-list-events", "bbaggins@shire.com", "event_name, created_at")
+=FLEX("YOUR_TEAM_NAME/intercom-events", "bbaggins@shire.com", "event_name, created_at")
 ```
 
 Get a list of user ids, emails, and names of the last 20 user profiles that were added:
 ```
-=FLEX("YOUR_TEAM_NAME/intercom-list-signups", 20, "user_id, email, name")
+=FLEX("YOUR_TEAM_NAME/intercom-signups", 20, "user_id, email, name")
 ```
 
 ## Prerequisites
