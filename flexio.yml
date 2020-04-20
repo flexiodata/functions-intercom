@@ -1,7 +1,7 @@
 title: Intercom Function Pack
 description: Functions for accessing your Intercom info
 image:
-  src: https://logo.clearbit.com/intercom.com
+  src: https://static.flex.io/assets/logos2/intercom.png
   alt: Intercom logo
 functions:
   - path: intercom-events.py
