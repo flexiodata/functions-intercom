@@ -5,7 +5,7 @@ image:
   alt: Intercom logo
 functions:
   - path: intercom-events.py
-  - path: intercom-signups.py
+  - path: intercom-users.py
 prompts:
   - element: auth
     name: auth
