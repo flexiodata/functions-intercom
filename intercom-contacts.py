@@ -1,9 +1,9 @@
 
 # ---
-# name: intercom-users
+# name: intercom-contacts
 # deployed: true
-# title: Intercom Users
-# description: Returns a list of the most recently created user profiles
+# title: Intercom Contacts
+# description: Returns a list of contacts
 # params:
 #   - name: days
 #     type: number

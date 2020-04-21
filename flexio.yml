@@ -4,8 +4,8 @@ image:
   src: https://static.flex.io/assets/logos2/intercom.png
   alt: Intercom logo
 functions:
+  - path: intercom-contacts.py
   - path: intercom-events.py
-  - path: intercom-users.py
 prompts:
   - element: auth
     name: auth
