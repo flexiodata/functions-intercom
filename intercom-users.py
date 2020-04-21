@@ -1,8 +1,8 @@
 
 # ---
-# name: intercom-signups
+# name: intercom-users
 # deployed: true
-# title: IntercomSignups
+# title: Intercom Users
 # description: Returns a list of the most recently created user profiles
 # params:
 #   - name: days
