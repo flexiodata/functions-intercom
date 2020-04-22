@@ -2,6 +2,7 @@
 # ---
 # name: intercom-companies
 # deployed: true
+# config: index
 # title: Intercom Companies
 # description: Returns a list of companies from Intercom
 # params:

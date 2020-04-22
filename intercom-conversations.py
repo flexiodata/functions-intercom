@@ -2,6 +2,7 @@
 # ---
 # name: intercom-conversations
 # deployed: true
+# config: index
 # title: Intercom Conversations
 # description: Returns a list of conversations from Intercom
 # params:

@@ -2,6 +2,7 @@
 # ---
 # name: intercom-contacts
 # deployed: true
+# config: index
 # title: Intercom Contacts
 # description: Returns a list of contacts from Intercom
 # params:
