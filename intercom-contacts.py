@@ -194,6 +194,8 @@ def get_data(params):
         for item in data:
             yield get_item_info(item)
 
+        # note: paginator for contacts different from other api endpoints
+        # https://developers.intercom.com/intercom-api-reference/reference#pagination-cursor
         page_cursor_id = content.get('pages',{}).get('next',{}).get('starting_after')
         if page_cursor_id is None:
             break
