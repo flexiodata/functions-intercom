@@ -145,7 +145,7 @@
 #     type: integer
 #     description: The total number of conversation parts
 # examples:
-#   - '*'
+#   - '""'
 #   - '"id, source_subject, state, created_at"'
 # ---
 

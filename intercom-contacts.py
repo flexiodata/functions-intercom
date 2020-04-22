@@ -136,7 +136,7 @@
 #     type: string
 #     description: The last time the contact used the iOS app
 # examples:
-#   - '*'
+#   - '""'
 #   - '"email, name"'
 # ---
 

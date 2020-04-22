@@ -55,7 +55,7 @@
 #     type: string
 #     description: The industry that the company operates in
 # examples:
-#   - '*'
+#   - '""'
 #   - '"compay_id, name"'
 # ---
 
