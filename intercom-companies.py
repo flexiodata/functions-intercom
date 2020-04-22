@@ -92,15 +92,11 @@ def get_data(params):
     url = 'https://api.intercom.io/companies'
 
     page_size = 50
-    page_cursor_id = None
+    url_query_params = {"per_page": page_size}
+    url_query_str = urllib.parse.urlencode(url_query_params)
+    page_url = url + '?' + url_query_str
 
     while True:
-
-        url_query_params = {"per_page": page_size}
-        if page_cursor_id is not None:
-            url_query_params['starting_after'] = page_cursor_id
-        url_query_str = urllib.parse.urlencode(url_query_params)
-        page_url = url + '?' + url_query_str
 
         response = requests_retry_session().get(page_url, headers=headers)
         response.raise_for_status()
@@ -113,8 +109,8 @@ def get_data(params):
         for item in data:
             yield get_item_info(item)
 
-        page_cursor_id = content.get('pages',{}).get('next',{}).get('starting_after')
-        if page_cursor_id is None:
+        page_url = content.get('pages',{}).get('next')
+        if page_url is None:
             break
 
 def requests_retry_session(
