@@ -33,7 +33,7 @@ templates:
     in_production: false
     in_staging: false
   - name: enrich-contact-list
-    title: 'Enrich contact list with profile data'
+    title: 'Enrich a contact list with data from Intercom'
     description: 'Add profile and company data from Intercom to a list of contacts'
     gsheets_spreadsheet_id: ''
     excel_spreadsheet_path: ''
