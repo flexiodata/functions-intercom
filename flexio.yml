@@ -13,21 +13,21 @@ functions:
 templates:
   - name: lookup-conversations
     title: 'Search and filter Intercom conversations'
-    description: 'Import and filter data for conversations in your spreadsheet'
+    description: 'Import and filter data for your Intercom conversations in your spreadsheet'
     gsheets_spreadsheet_id: ''
     excel_spreadsheet_path: ''
     in_production: false
     in_staging: false
   - name: lookup-contacts
     title: 'Lookup contacts in Intercom'
-    description: 'Search and filter data for contacts in your spreadsheet'
+    description: 'Search and filter data for contacts in Intercom in your spreadsheet'
     gsheets_spreadsheet_id: ''
     excel_spreadsheet_path: ''
     in_production: false
     in_staging: false
   - name: lookup-companies
     title: 'Lookup companies in Intercom'
-    description: 'Search and filter data for companies in your spreadsheet'
+    description: 'Search and filter data for companies in Intercom in your spreadsheet'
     gsheets_spreadsheet_id: ''
     excel_spreadsheet_path: ''
     in_production: false
