@@ -1,12 +1,45 @@
 title: Intercom
 description: Functions for accessing your Intercom info
+
 image:
   src: https://static.flex.io/assets/logos2/intercom.png
   alt: Intercom logo
+
 functions:
   - path: intercom-companies.py
   - path: intercom-contacts.py
   - path: intercom-conversations.py
+
+templates:
+  - name: lookup-contacts
+    title: 'Lookup contacts in Intercom'
+    description: 'Search and filter data for contacts in your spreadsheet'
+    gsheets_spreadsheet_id: ''
+    excel_spreadsheet_path: ''
+    in_production: false
+    in_staging: false
+  - name: lookup-companies
+    title: 'Lookup companies in Intercom'
+    description: 'Search and filter data for companies in your spreadsheet'
+    gsheets_spreadsheet_id: ''
+    excel_spreadsheet_path: ''
+    in_production: false
+    in_staging: false
+  - name: lookup-conversations
+    title: 'Search and filter Intercom conversations'
+    description: 'Import and filter data for conversations in your spreadsheet'
+    gsheets_spreadsheet_id: ''
+    excel_spreadsheet_path: ''
+    in_production: false
+    in_staging: false
+  - name: enrich-contact-list
+    title: 'Enrich contact list with profile data'
+    description: 'Add profile and company data from Intercom to a list of contacts'
+    gsheets_spreadsheet_id: ''
+    excel_spreadsheet_path: ''
+    in_production: false
+    in_staging: false
+
 prompts:
   - element: auth
     name: auth
