@@ -11,6 +11,13 @@ functions:
   - path: intercom-conversations.py
 
 templates:
+  - name: lookup-conversations
+    title: 'Search and filter Intercom conversations'
+    description: 'Import and filter data for conversations in your spreadsheet'
+    gsheets_spreadsheet_id: ''
+    excel_spreadsheet_path: ''
+    in_production: false
+    in_staging: false
   - name: lookup-contacts
     title: 'Lookup contacts in Intercom'
     description: 'Search and filter data for contacts in your spreadsheet'
@@ -21,13 +28,6 @@ templates:
   - name: lookup-companies
     title: 'Lookup companies in Intercom'
     description: 'Search and filter data for companies in your spreadsheet'
-    gsheets_spreadsheet_id: ''
-    excel_spreadsheet_path: ''
-    in_production: false
-    in_staging: false
-  - name: lookup-conversations
-    title: 'Search and filter Intercom conversations'
-    description: 'Import and filter data for conversations in your spreadsheet'
     gsheets_spreadsheet_id: ''
     excel_spreadsheet_path: ''
     in_production: false
