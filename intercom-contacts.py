@@ -225,7 +225,7 @@ def requests_retry_session(
 def to_date(ts):
     if ts is None or ts == '':
         return ''
-    return datetime.utcfromtimestamp(int(ts)/1000).strftime('%Y-%m-%d %H:%M:%S')
+    return datetime.utcfromtimestamp(int(ts)/1000).strftime('%Y-%m-%dT%H:%M:%S')
 
 def to_string(value):
     if isinstance(value, (date, datetime)):
